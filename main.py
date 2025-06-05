@@ -32,7 +32,12 @@ graph_builder = StateGraph(State)
 # (3) Initialize the LLM
 from langchain_anthropic import ChatAnthropic
 
-llm = ChatAnthropic(model="claude-3-5-sonnet-20240620")
+llm = ChatAnthropic(
+    model="claude-3-5-sonnet-20240620",
+    max_tokens=4096,  # 최대 출력 토큰 수 설정
+    temperature=0.7,  # 창의성과 일관성의 균형
+    streaming=True    # 스트리밍 응답 활성화
+)
 
 
 # (4) Create the Chatbot Node
@@ -83,12 +88,17 @@ class State(TypedDict):
 graph_builder = StateGraph(State)
 
 # Tools
-tool = TavilySearchResults(max_results=5)
+tool = TavilySearchResults(max_results=50)
 # add more tools here
 tools = [tool] # list of tools
 
 # LLM with Tools
-llm = ChatAnthropic(model="claude-3-5-sonnet-20240620")
+llm = ChatAnthropic(
+    model="claude-3-5-sonnet-20240620",
+    max_tokens=4096,  # 최대 출력 토큰 수 설정
+    temperature=0.7,  # 창의성과 일관성의 균형
+    streaming=True    # 스트리밍 응답 활성화
+)
 llm_with_tools = llm.bind_tools(tools)
 
 # Nodes and Edges
