@@ -35,7 +35,7 @@ from langchain_anthropic import ChatAnthropic
 llm = ChatAnthropic(
     model="claude-3-5-sonnet-20240620",
     max_tokens=4096,  # 최대 출력 토큰 수 설정
-    temperature=0.7,  # 창의성과 일관성의 균형
+    temperature=0.5,  # 창의성과 일관성의 균형
     streaming=True    # 스트리밍 응답 활성화
 )
 
@@ -79,6 +79,12 @@ from typing_extensions import TypedDict
 from langgraph.graph import StateGraph
 from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
+
+import os
+import streamlit as st
+
+os.environ["TAVILY_API_KEY"] = st.secrets["tavily"]["api_key"]
+os.environ["ANTHROPIC_API_KEY"] = st.secrets["anthropic"]["api_key"]
 
 
 class State(TypedDict):
